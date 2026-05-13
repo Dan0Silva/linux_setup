@@ -1,0 +1,29 @@
+# Extensões do VS Code
+# Uma extensão por linha. Linhas com # são ignoradas.
+# Para listar as suas extensões atuais: code --list-extensions
+
+# Tema e Aparência
+# zhuangtongfa.material-theme
+# pkief.material-icon-theme
+
+# Git
+# eamodio.gitlens
+# mhutchie.git-graph
+
+# Linguagens
+# golang.go
+# ms-python.python
+# rust-lang.rust-analyzer
+# bradlc.vscode-tailwindcss
+
+# Utilitários
+# esbenp.prettier-vscode
+# dbaeumer.vscode-eslint
+# editorconfig.editorconfig
+# formulahendry.auto-rename-tag
+# christian-kohler.path-intellisense
+# streetsidesoftware.code-spell-checker
+
+# Docker & DevOps
+# ms-azuretools.vscode-docker
+# ms-vscode-remote.remote-containers

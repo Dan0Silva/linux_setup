@@ -1,0 +1,9 @@
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --oneline --graph --all --decorate
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    amend = commit --amend --no-edit

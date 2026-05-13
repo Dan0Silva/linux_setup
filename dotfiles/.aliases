@@ -1,0 +1,45 @@
+# ============================================================================
+#  .aliases — Aliases compartilhados entre shells
+# ============================================================================
+
+# ── Navegação ───────────────────────────────────────────────────────────────
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# ── ls moderno ──────────────────────────────────────────────────────────────
+alias ls="ls --color=auto"
+alias ll="ls -lAh --color=auto"
+alias la="ls -A --color=auto"
+alias l="ls -CF"
+
+# ── Git ─────────────────────────────────────────────────────────────────────
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log --oneline --graph --all"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+
+# ── Segurança ──────────────────────────────────────────────────────────────
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+# ── Utilitários ─────────────────────────────────────────────────────────────
+alias grep="grep --color=auto"
+alias df="df -h"
+alias du="du -h"
+alias free="free -h"
+
+# ── Atalhos de edição ──────────────────────────────────────────────────────
+alias v="nvim"
+alias vim="nvim"
+alias zshrc="nvim ~/.zshrc"
+alias aliases="nvim ~/.aliases"
+
+# ── Dotfiles ────────────────────────────────────────────────────────────────
+alias dotfiles="cd ~/Workbench/dotfiles"
+alias reload="source ~/.zshrc && echo 'Zsh recarregado!'"
