@@ -99,7 +99,114 @@ setup_nerd_fonts() {
 }
 
 # ── Configurando Wallpaper ──────────────────────────────────────────────────
-# (Placeholder — adicione lógica de wallpaper futuramente)
+WALLPAPER_SRC="${DOTFILES_DIR}/assets/wallpapers/default.png"
+
+# Detecta o DE/WM ativo e aplica o wallpaper com a ferramenta correta.
+# Suporte: GNOME, KDE Plasma, XFCE, Cinnamon, MATE, Sway, Hyprland, feh, nitrogen.
+setup_wallpaper() {
+    if [[ ! -f "${WALLPAPER_SRC}" ]]; then
+        log_warn "Wallpaper não encontrado: ${WALLPAPER_SRC}"
+        return 0
+    fi
+
+    local wallpaper
+    wallpaper="$(readlink -f "${WALLPAPER_SRC}")"
+
+    local desktop="${XDG_CURRENT_DESKTOP:-unknown}"
+    local session="${XDG_SESSION_TYPE:-x11}"
+
+    log_info "Configurando wallpaper (DE: ${desktop}, session: ${session})..."
+
+    # Normaliza para minúsculas
+    desktop="${desktop,,}"
+
+    case "${desktop}" in
+        *gnome*|*ubuntu*)
+            if command -v gsettings &>/dev/null; then
+                gsettings set org.gnome.desktop.background picture-uri "file://${wallpaper}"
+                gsettings set org.gnome.desktop.background picture-uri-dark "file://${wallpaper}"
+                gsettings set org.gnome.desktop.background picture-options "zoom"
+                log_success "Wallpaper configurado (GNOME/gsettings)."
+            else
+                log_warn "gsettings não encontrado. Instale gnome-settings-daemon."
+            fi
+            ;;
+
+        *kde*|*plasma*)
+            if command -v plasma-apply-wallpaperimage &>/dev/null; then
+                plasma-apply-wallpaperimage "${wallpaper}" &>/dev/null
+                log_success "Wallpaper configurado (KDE Plasma)."
+            else
+                log_warn "plasma-apply-wallpaperimage não encontrado."
+            fi
+            ;;
+
+        *xfce*)
+            if command -v xfconf-query &>/dev/null; then
+                # Aplica em todos os monitores conhecidos
+                for prop in $(xfconf-query -c xfce4-desktop -l 2>/dev/null | grep "last-image$"); do
+                    xfconf-query -c xfce4-desktop -p "${prop}" -s "${wallpaper}" 2>/dev/null
+                done
+                log_success "Wallpaper configurado (XFCE)."
+            else
+                log_warn "xfconf-query não encontrado."
+            fi
+            ;;
+
+        *cinnamon*)
+            if command -v gsettings &>/dev/null; then
+                gsettings set org.cinnamon.desktop.background picture-uri "file://${wallpaper}"
+                gsettings set org.cinnamon.desktop.background picture-options "zoom"
+                log_success "Wallpaper configurado (Cinnamon)."
+            else
+                log_warn "gsettings não encontrado."
+            fi
+            ;;
+
+        *mate*)
+            if command -v gsettings &>/dev/null; then
+                gsettings set org.mate.background picture-filename "${wallpaper}"
+                gsettings set org.mate.background picture-options "zoom"
+                log_success "Wallpaper configurado (MATE)."
+            else
+                log_warn "gsettings não encontrado."
+            fi
+            ;;
+
+        *sway*)
+            if command -v swaymsg &>/dev/null; then
+                swaymsg output "*" bg "${wallpaper}" fill &>/dev/null
+                log_success "Wallpaper configurado (Sway)."
+            else
+                log_warn "swaymsg não encontrado."
+            fi
+            ;;
+
+        *hyprland*)
+            if command -v hyprctl &>/dev/null; then
+                hyprctl hyprpaper wallpaper ",${wallpaper}" &>/dev/null || \
+                    log_info "Configure hyprpaper.conf manualmente com: wallpaper = ,${wallpaper}"
+                log_success "Wallpaper configurado (Hyprland)."
+            else
+                log_warn "hyprctl não encontrado."
+            fi
+            ;;
+
+        *)
+            # Fallback para WMs minimalistas (i3, bspwm, openbox, etc.)
+            if command -v feh &>/dev/null; then
+                feh --bg-fill "${wallpaper}" &>/dev/null
+                log_success "Wallpaper configurado (feh)."
+            elif command -v nitrogen &>/dev/null; then
+                nitrogen --set-zoom-fill --save "${wallpaper}" &>/dev/null
+                log_success "Wallpaper configurado (nitrogen)."
+            else
+                log_warn "Nenhuma ferramenta de wallpaper encontrada (feh, nitrogen)."
+                log_info "Instale feh ou nitrogen, ou configure manualmente."
+            fi
+            ;;
+    esac
+}
 
 # ── Instalar pacotes de Desktop ─────────────────────────────────────────────
 install_desktop_pkgs() {
@@ -145,6 +252,7 @@ setup_desktop_links() {
 # ── Executar ────────────────────────────────────────────────────────────────
 install_desktop_pkgs
 setup_nerd_fonts
+setup_wallpaper
 setup_desktop_links
 
 log_info "Configuração do Desktop Environment finalizada."
