@@ -21,6 +21,7 @@ COMMON_PKGS=(
     zsh
     vim
     neovim
+    firefox-esr
 )
 
 # ── Pacotes específicos por distro ──────────────────────────────────────────
