@@ -20,6 +20,7 @@ ENABLE_LINKS=false
 ENABLE_ZSH=false
 ENABLE_VSCODE=false
 ENABLE_VIRT=false
+ENABLE_ASDF=false
 ENABLE_DESKTOP=false   # Ex: Polybar, Rofi, i3, Hyprland...
 
 # ── Cores para output ──────────────────────────────────────────────────────
@@ -88,6 +89,7 @@ parse_args() {
                 ENABLE_ZSH=true
                 ENABLE_VSCODE=true
                 ENABLE_VIRT=true
+                ENABLE_ASDF=true
                 ENABLE_DESKTOP=true
                 ;;
             --pkgs)     ENABLE_PKGS=true ;;
@@ -95,6 +97,7 @@ parse_args() {
             --zsh)      ENABLE_ZSH=true ;;
             --vscode)   ENABLE_VSCODE=true ;;
             --virt)     ENABLE_VIRT=true ;;
+            --asdf)     ENABLE_ASDF=true ;;
             --desktop)  ENABLE_DESKTOP=true ;;
             --help|-h)  show_help; exit 0 ;;
             *)
@@ -116,6 +119,7 @@ show_help() {
     echo "  --zsh       Configura Zsh + Oh-My-Zsh + plugins"
     echo "  --vscode    Configura VS Code (settings.json)"
     echo "  --virt      Configura Virtualização (KVM, QEMU, virt-manager)"
+    echo "  --asdf      Instala o asdf (gerenciador de versões)"
     echo "  --desktop   Configura Desktop Environment (Polybar, Rofi, etc.)"
     echo "  --help, -h  Mostra esta ajuda"
     echo ""
@@ -157,6 +161,7 @@ main() {
     [[ "${ENABLE_ZSH}"     == true ]] && run_module "Zsh + Oh-My-Zsh"     "${SCRIPTS_DIR}/setup_zsh.sh"
     [[ "${ENABLE_VSCODE}"  == true ]] && run_module "VS Code"             "${SCRIPTS_DIR}/setup_vscode.sh"
     [[ "${ENABLE_VIRT}"    == true ]] && run_module "Virtualização"       "${SCRIPTS_DIR}/setup_virt.sh"
+    [[ "${ENABLE_ASDF}"    == true ]] && run_module "ASDF"                "${SCRIPTS_DIR}/setup_asdf.sh"
     [[ "${ENABLE_DESKTOP}" == true ]] && run_module "Desktop Environment" "${SCRIPTS_DIR}/setup_desktop.sh"
 
     echo ""

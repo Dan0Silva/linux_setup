@@ -17,8 +17,6 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
-
 # ── Variáveis de ambiente ──────────────────────────────────────────────────
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -40,4 +38,3 @@ if command -v asdf >/dev/null 2>&1; then
     export PATH="$PATH:$GOROOT/bin"
   fi
 fi
-

@@ -33,6 +33,7 @@ chmod +x install.sh scripts/*.sh
 | `--zsh` | Instala Oh-My-Zsh, plugins e o tema Archcraft |
 | `--vscode` | Configura VS Code (settings, keybindings, extensões) |
 | `--virt` | Configura Virtualização (KVM, QEMU, virt-manager e libvirtd) |
+| `--asdf` | Instala e configura o `asdf` (gerenciador de versões) |
 | `--desktop` | Configura Desktop Environment (Polybar, Rofi, etc.) |
 | `--help` | Mostra a ajuda |
 
@@ -52,6 +53,7 @@ dotfiles/
 │   ├── setup_zsh.sh                  #   → Zsh + Oh-My-Zsh + plugins + tema
 │   ├── setup_vscode.sh               #   → VS Code (settings + extensões)
 │   ├── setup_virt.sh                 #   → Virtualização (KVM/QEMU)
+│   ├── setup_asdf.sh                 #   → Instalação do asdf
 │   └── setup_desktop.sh              #   → Desktop (Polybar, Rofi, i3...)
 │
 ├── dotfiles/                         # Arquivos de configuração (espelha o $HOME)
