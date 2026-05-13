@@ -32,7 +32,6 @@ chmod +x install.sh scripts/*.sh
 | `--links` | Cria links simbólicos dos dotfiles para o `$HOME` |
 | `--zsh` | Instala Oh-My-Zsh, plugins e o tema Archcraft |
 | `--vscode` | Configura VS Code (settings, keybindings, extensões) |
-| `--ssh` | Configura `~/.ssh` com permissões corretas (700/600) |
 | `--desktop` | Configura Desktop Environment (Polybar, Rofi, etc.) |
 | `--help` | Mostra a ajuda |
 
@@ -51,7 +50,6 @@ dotfiles/
 │   ├── setup_links.sh                #   → Links simbólicos
 │   ├── setup_zsh.sh                  #   → Zsh + Oh-My-Zsh + plugins + tema
 │   ├── setup_vscode.sh               #   → VS Code (settings + extensões)
-│   ├── setup_ssh.sh                  #   → Permissões SSH
 │   └── setup_desktop.sh              #   → Desktop (Polybar, Rofi, i3...)
 │
 ├── dotfiles/                         # Arquivos de configuração (espelha o $HOME)
@@ -60,8 +58,6 @@ dotfiles/
 │   ├── .aliases                      #   → Aliases compartilhados
 │   ├── .gitconfig                    #   → Configuração do Git
 │   ├── .tmux.conf                    #   → Configuração do Tmux
-│   ├── .ssh/
-│   │   └── config                    #   → Template SSH config
 │   └── .config/
 │       ├── Code/
 │       │   ├── User/settings.json    #   → Settings do VS Code
@@ -205,10 +201,8 @@ ENABLE_DOCKER=false
 
 ## 🔒 Segurança
 
-- **Chaves SSH** (`id_*`) estão no `.gitignore` — nunca são commitadas
-- O módulo `--ssh` apenas ajusta permissões e linka o `config`
-- Arquivos existentes são sempre renomeados para `.bak` antes de serem sobrescritos
 - O script detecta a distro automaticamente via `/etc/os-release`
+- Arquivos existentes são sempre renomeados para `.bak` antes de serem sobrescritos
 
 ---
 

@@ -1,7 +1,4 @@
 # ── Arquivos sensíveis ──────────────────────────────────────────────────────
-dotfiles/.ssh/id_*
-dotfiles/.ssh/known_hosts
-dotfiles/.ssh/authorized_keys
 *.pem
 *.key
 
