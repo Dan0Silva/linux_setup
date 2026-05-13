@@ -33,6 +33,12 @@ ARCH_PKGS=(
     noto-fonts
     noto-fonts-emoji
     xclip
+    virt-manager
+    qemu-desktop
+    libvirt
+    dnsmasq
+    iptables-nft
+    openbsd-netcat
 )
 
 DEBIAN_PKGS=(
@@ -41,6 +47,11 @@ DEBIAN_PKGS=(
     fonts-noto
     fonts-noto-color-emoji
     software-properties-common
+    qemu-kvm
+    libvirt-daemon-system
+    libvirt-clients
+    bridge-utils
+    virt-manager
 )
 
 # ── Função de instalação ────────────────────────────────────────────────────

@@ -32,6 +32,7 @@ chmod +x install.sh scripts/*.sh
 | `--links` | Cria links simbólicos dos dotfiles para o `$HOME` |
 | `--zsh` | Instala Oh-My-Zsh, plugins e o tema Archcraft |
 | `--vscode` | Configura VS Code (settings, keybindings, extensões) |
+| `--virt` | Configura Virtualização (KVM, QEMU, virt-manager e libvirtd) |
 | `--desktop` | Configura Desktop Environment (Polybar, Rofi, etc.) |
 | `--help` | Mostra a ajuda |
 
@@ -50,6 +51,7 @@ dotfiles/
 │   ├── setup_links.sh                #   → Links simbólicos
 │   ├── setup_zsh.sh                  #   → Zsh + Oh-My-Zsh + plugins + tema
 │   ├── setup_vscode.sh               #   → VS Code (settings + extensões)
+│   ├── setup_virt.sh                 #   → Virtualização (KVM/QEMU)
 │   └── setup_desktop.sh              #   → Desktop (Polybar, Rofi, i3...)
 │
 ├── dotfiles/                         # Arquivos de configuração (espelha o $HOME)

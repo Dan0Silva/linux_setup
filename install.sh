@@ -19,6 +19,7 @@ ENABLE_PKGS=false
 ENABLE_LINKS=false
 ENABLE_ZSH=false
 ENABLE_VSCODE=false
+ENABLE_VIRT=false
 ENABLE_DESKTOP=false   # Ex: Polybar, Rofi, i3, Hyprland...
 
 # ── Cores para output ──────────────────────────────────────────────────────
@@ -86,12 +87,14 @@ parse_args() {
                 ENABLE_LINKS=true
                 ENABLE_ZSH=true
                 ENABLE_VSCODE=true
+                ENABLE_VIRT=true
                 ENABLE_DESKTOP=true
                 ;;
             --pkgs)     ENABLE_PKGS=true ;;
             --links)    ENABLE_LINKS=true ;;
             --zsh)      ENABLE_ZSH=true ;;
             --vscode)   ENABLE_VSCODE=true ;;
+            --virt)     ENABLE_VIRT=true ;;
             --desktop)  ENABLE_DESKTOP=true ;;
             --help|-h)  show_help; exit 0 ;;
             *)
@@ -112,6 +115,7 @@ show_help() {
     echo "  --links     Cria links simbólicos dos dotfiles"
     echo "  --zsh       Configura Zsh + Oh-My-Zsh + plugins"
     echo "  --vscode    Configura VS Code (settings.json)"
+    echo "  --virt      Configura Virtualização (KVM, QEMU, virt-manager)"
     echo "  --desktop   Configura Desktop Environment (Polybar, Rofi, etc.)"
     echo "  --help, -h  Mostra esta ajuda"
     echo ""
@@ -152,6 +156,7 @@ main() {
     [[ "${ENABLE_LINKS}"   == true ]] && run_module "Links Simbólicos"     "${SCRIPTS_DIR}/setup_links.sh"
     [[ "${ENABLE_ZSH}"     == true ]] && run_module "Zsh + Oh-My-Zsh"     "${SCRIPTS_DIR}/setup_zsh.sh"
     [[ "${ENABLE_VSCODE}"  == true ]] && run_module "VS Code"             "${SCRIPTS_DIR}/setup_vscode.sh"
+    [[ "${ENABLE_VIRT}"    == true ]] && run_module "Virtualização"       "${SCRIPTS_DIR}/setup_virt.sh"
     [[ "${ENABLE_DESKTOP}" == true ]] && run_module "Desktop Environment" "${SCRIPTS_DIR}/setup_desktop.sh"
 
     echo ""
