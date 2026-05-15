@@ -51,8 +51,8 @@ install_nerd_font() {
     local font_dest="${FONTS_DIR}/${font_name}"
     local zip_url="${NERD_FONTS_BASE_URL}/${font_name}.zip"
 
-    # Se a pasta da fonte já existe e contém .ttf, pula
-    if [[ -d "${font_dest}" ]] && ls "${font_dest}"/*.ttf &>/dev/null; then
+    # Se a pasta da fonte já existe e contém .ttf ou .otf, pula
+    if [[ -d "${font_dest}" ]] && compgen -G "${font_dest}"/*.{ttf,otf} &>/dev/null; then
         log_success "Fonte já instalada: ${font_name}"
         return 0
     fi
@@ -70,9 +70,22 @@ install_nerd_font() {
 
     mkdir -p "${font_dest}"
 
-    # Extrai apenas arquivos .ttf (ignora variáveis/Windows)
-    unzip -o -j "${tmp_zip}" '*.ttf' -d "${font_dest}" -x '*Windows*' &>/dev/null || \
-        unzip -o -j "${tmp_zip}" '*.ttf' -d "${font_dest}" &>/dev/null
+    # Extrai arquivos .ttf e .otf (ignora variáveis/Windows)
+    # Algumas fontes (ex: DepartureMono) distribuem .otf ao invés de .ttf
+    local extracted=false
+
+    for ext in ttf otf; do
+        if unzip -o -j "${tmp_zip}" "*.${ext}" -d "${font_dest}" -x '*Windows*' &>/dev/null || \
+           unzip -o -j "${tmp_zip}" "*.${ext}" -d "${font_dest}" &>/dev/null; then
+            extracted=true
+        fi
+    done
+
+    if [[ "${extracted}" != true ]]; then
+        log_warn "Nenhum arquivo .ttf ou .otf encontrado em: ${font_name}.zip"
+        rm -f "${tmp_zip}"
+        return 1
+    fi
 
     rm -f "${tmp_zip}"
     log_success "Fonte instalada: ${font_name} → ${font_dest}"

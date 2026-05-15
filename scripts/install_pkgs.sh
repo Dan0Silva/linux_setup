@@ -46,7 +46,6 @@ DEBIAN_PKGS=(
     xclip
     fonts-noto
     fonts-noto-color-emoji
-    software-properties-common
     qemu-kvm
     libvirt-daemon-system
     libvirt-clients
