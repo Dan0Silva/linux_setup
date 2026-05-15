@@ -17,6 +17,9 @@ plugins=(
     zsh-syntax-highlighting
 )
 
+# Carrega Oh-My-Zsh (deve vir APÓS ZSH_THEME e plugins)
+source "$ZSH/oh-my-zsh.sh"
+
 # ── Variáveis de ambiente ──────────────────────────────────────────────────
 export EDITOR="nvim"
 export VISUAL="nvim"

@@ -8,14 +8,24 @@ ZSH_CUSTOM="${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}"
 
 # ── Instalar Oh-My-Zsh ─────────────────────────────────────────────────────
 install_oh_my_zsh() {
-    if [[ -d "${HOME}/.oh-my-zsh" ]]; then
+    # Verifica se o OMZ está realmente instalado (oh-my-zsh.sh é o indicador real,
+    # não apenas a existência de ~/.oh-my-zsh que pode ser criada parcialmente
+    # por clone_plugin ou link_zsh_custom)
+    if [[ -f "${HOME}/.oh-my-zsh/oh-my-zsh.sh" ]]; then
         log_success "Oh-My-Zsh já instalado."
         return 0
     fi
 
     log_info "Instalando Oh-My-Zsh..."
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+    # KEEP_ZSHRC=yes evita que o instalador do OMZ sobrescreva o .zshrc
+    # gerenciado pelos dotfiles (que pode já ser um symlink de setup_links.sh)
+    KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
     log_success "Oh-My-Zsh instalado."
+
+    # Restaura o symlink do .zshrc caso tenha sido movido/sobrescrito
+    _restore_zshrc_link
 }
 
 # ── Clonar plugin (idempotente) ─────────────────────────────────────────────
@@ -34,6 +44,32 @@ clone_plugin() {
     log_info "Clonando plugin: ${name}..."
     git clone --depth=1 "${repo}" "${dest}"
     log_success "Plugin '${name}' instalado."
+}
+
+# ── Restaurar symlink do .zshrc ────────────────────────────────────────────
+# Se o instalador do OMZ criou/sobrescreveu .zshrc, restaura o link do dotfiles.
+_restore_zshrc_link() {
+    local zshrc_src="${DOTFILES_DIR}/dotfiles/.zshrc"
+    local zshrc_dest="${HOME}/.zshrc"
+
+    if [[ ! -f "${zshrc_src}" ]]; then
+        return 0
+    fi
+
+    # Se já é o symlink correto, nada a fazer
+    if [[ -L "${zshrc_dest}" && "$(readlink -f "${zshrc_dest}")" == "$(readlink -f "${zshrc_src}")" ]]; then
+        return 0
+    fi
+
+    # Backup do .zshrc gerado pelo OMZ (se existir)
+    if [[ -e "${zshrc_dest}" ]]; then
+        local backup="${zshrc_dest}.bak.$(date +%Y%m%d_%H%M%S)"
+        log_warn "Backup do .zshrc sobrescrito pelo OMZ: ${backup}"
+        mv "${zshrc_dest}" "${backup}"
+    fi
+
+    ln -sf "${zshrc_src}" "${zshrc_dest}"
+    log_success "Symlink do .zshrc restaurado: ${zshrc_dest} → ${zshrc_src}"
 }
 
 # ── Instalar tema Archcraft (symlink) ───────────────────────────────────────
