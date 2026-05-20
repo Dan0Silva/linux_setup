@@ -65,4 +65,10 @@ safe_link "${DOTFILES_SRC}/.config/nvim" "${HOME}/.config/nvim"
 # ── Kitty ───────────────────────────────────────────────────────────────────
 safe_link "${DOTFILES_SRC}/.config/kitty" "${HOME}/.config/kitty"
 
+# ── Btop ────────────────────────────────────────────────────────────────────
+safe_link "${DOTFILES_SRC}/.config/btop" "${HOME}/.config/btop"
+
+# ── VS Code ─────────────────────────────────────────────────────────────────
+safe_link "${DOTFILES_SRC}/.config/Code" "${HOME}/.config/Code"
+
 log_info "Todos os links simbólicos foram processados."

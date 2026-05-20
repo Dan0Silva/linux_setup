@@ -112,7 +112,13 @@ setup_nerd_fonts() {
 }
 
 # ── Configurando Wallpaper ──────────────────────────────────────────────────
-WALLPAPER_SRC="${DOTFILES_DIR}/assets/wallpapers/default.png"
+if [[ "${DISTRO}" == "arch" ]]; then
+    WALLPAPER_SRC="${DOTFILES_DIR}/assets/wallpapers/default_archlinux.jpg"
+elif [[ "${DISTRO}" == "debian" ]]; then
+    WALLPAPER_SRC="${DOTFILES_DIR}/assets/wallpapers/default_debian.png"
+else
+    WALLPAPER_SRC="${DOTFILES_DIR}/assets/wallpapers/default.png"
+fi
 
 # Detecta o DE/WM ativo e aplica o wallpaper com a ferramenta correta.
 # Suporte: GNOME, KDE Plasma, XFCE, Cinnamon, MATE, Sway, Hyprland, feh, nitrogen.

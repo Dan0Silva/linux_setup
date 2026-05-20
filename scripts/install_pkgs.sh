@@ -101,8 +101,49 @@ install_yay() {
     log_success "yay instalado com sucesso."
 }
 
+# ── Apps Externos ───────────────────────────────────────────────────────────
+install_vscode() {
+    if command -v code &>/dev/null; then
+        log_success "Visual Studio Code já instalado."
+        return 0
+    fi
+
+    log_info "Instalando Visual Studio Code..."
+    if [[ "${DISTRO}" == "arch" ]]; then
+        yay -S --noconfirm visual-studio-code-bin
+    elif [[ "${DISTRO}" == "debian" ]]; then
+        local tmp_deb
+        tmp_deb="$(mktemp -d)/vscode.deb"
+        log_info "Baixando VS Code (.deb)..."
+        curl -L "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64" -o "${tmp_deb}"
+        sudo dpkg -i "${tmp_deb}" || sudo apt-get install -f -y
+        rm -rf "$(dirname "${tmp_deb}")"
+    fi
+}
+
+install_discord() {
+    if command -v discord &>/dev/null; then
+        log_success "Discord já instalado."
+        return 0
+    fi
+
+    log_info "Instalando Discord..."
+    if [[ "${DISTRO}" == "arch" ]]; then
+        yay -S --noconfirm discord
+    elif [[ "${DISTRO}" == "debian" ]]; then
+        local tmp_deb
+        tmp_deb="$(mktemp -d)/discord.deb"
+        log_info "Baixando Discord (.deb)..."
+        curl -L "https://discord.com/api/download?platform=linux&format=deb" -o "${tmp_deb}"
+        sudo dpkg -i "${tmp_deb}" || sudo apt-get install -f -y
+        rm -rf "$(dirname "${tmp_deb}")"
+    fi
+}
+
 # ── Executar ────────────────────────────────────────────────────────────────
 install_packages
 install_yay
+install_vscode
+install_discord
 
 log_info "Instalação de pacotes finalizada."
