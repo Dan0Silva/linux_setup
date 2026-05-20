@@ -14,14 +14,13 @@ COMMON_PKGS=(
     fastfetch
     tree
     ripgrep
-    fd-find
     bat
     tmux
     kitty
+    curl
     zsh
     vim
     neovim
-    firefox-esr
 )
 
 # ── Pacotes específicos por distro ──────────────────────────────────────────
@@ -39,11 +38,13 @@ ARCH_PKGS=(
     dnsmasq
     iptables-nft
     openbsd-netcat
+    firefox
 )
 
 DEBIAN_PKGS=(
     build-essential
     xclip
+    fd-find
     fonts-noto
     fonts-noto-color-emoji
     qemu-kvm
@@ -51,6 +52,7 @@ DEBIAN_PKGS=(
     libvirt-clients
     bridge-utils
     virt-manager
+    firefox-esr
 )
 
 # ── Função de instalação ────────────────────────────────────────────────────
